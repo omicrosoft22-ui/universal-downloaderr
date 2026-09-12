@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Video Downloader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ec4899;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+        }
+        .gradient-bg:hover {
+            background: linear-gradient(to right, #722c9e, #e01b1b, #e09b3a);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 max-w-4xl flex justify-between items-center">
+            <div class="font-bold text-xl flex items-center gap-2">
+                <i class="fa-brands fa-instagram text-2xl text-pink-600"></i>
+                <span class="gradient-text font-extrabold">InstaSaver</span>
+            </div>
+            <div>
+                <a href="#" class="text-gray-500 hover:text-gray-800 text-sm font-medium">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 max-w-3xl">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold mb-4">Instagram Video Downloader</h1>
+            <p class="text-gray-500 text-lg">Download Instagram Reels, Videos, Photos, and IGTV easily.</p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 mb-8 border border-gray-100">
+            <form id="downloadForm" class="flex flex-col sm:flex-row gap-4 relative">
+                <div class="relative flex-grow">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-link text-gray-400"></i>
+                    </div>
+                    <input type="url" id="igUrl" required placeholder="Paste Instagram URL here..." 
+                        class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:bg-white transition text-gray-700">
+                </div>
+                <button type="submit" class="gradient-bg text-white font-bold py-4 px-8 rounded-xl transition transform hover:-translate-y-1 shadow-md flex justify-center items-center gap-2 whitespace-nowrap">
+                    <span>Download</span>
+                    <i class="fa-solid fa-download"></i>
+                </button>
+            </form>
+            <p class="text-xs text-center text-gray-400 mt-4">Example: https://www.instagram.com/reels/DdByLicTNKT/</p>
+            
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" class="hidden mt-8 flex flex-col justify-center items-center gap-3 text-gray-500">
+                <div class="loader"></div>
+                <span class="font-medium animate-pulse">Fetching media from Instagram...</span>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden mt-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-center text-sm font-medium">
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultContainer" class="hidden bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            <!-- Dynamic Content Injected Here -->
+        </div>
+
+        <!-- How to use -->
+        <div class="mt-16 bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+            <h2 class="text-2xl font-bold mb-6 text-center">How to download?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-pink-600">
+                        <i class="fa-solid fa-copy text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">1. Copy URL</h3>
+                    <p class="text-sm text-gray-500">Open Instagram and copy the link of the video, reel, or photo you want to download.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-pink-600">
+                        <i class="fa-solid fa-paste text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">2. Paste Link</h3>
+                    <p class="text-sm text-gray-500">Paste the copied link into the input field above and click the Download button.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-pink-600">
+                        <i class="fa-solid fa-cloud-arrow-down text-xl"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">3. Download</h3>
+                    <p class="text-sm text-gray-500">Wait a few seconds for the media to be fetched, then save it to your device.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t mt-12 py-8">
+        <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            <p>&copy; 2026 InstaSaver. Free Instagram Downloader.</p>
+            <p class="mt-2 text-xs text-gray-400">This tool is not affiliated with Instagram.</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = 'https://xapiverse.com/api/instagram';
+        const API_KEY = 'xapi_6508cf02b36060278ec89925ee153e6e';
+
+        const form = document.getElementById('downloadForm');
+        const urlInput = document.getElementById('igUrl');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultContainer = document.getElementById('resultContainer');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = urlInput.value.trim();
+            if (!url) return;
+
+            // Reset UI
+            errorMessage.classList.add('hidden');
+            resultContainer.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            resultContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "xAPIverse-Key": API_KEY
+                    },
+                    body: JSON.stringify({ url: url })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success' && data.data) {
+                    displayResult(data.data);
+                } else {
+                    throw new Error(data.message || 'Failed to fetch media. Make sure the URL is correct and the post is public.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.textContent = error.message || 'An error occurred while connecting to the API.';
+                errorMessage.classList.remove('hidden');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        });
+
+        function displayResult(data) {
+            let mediaHtml = '';
+            
+            if (data.media && data.media.length > 0) {
+                data.media.forEach((item, index) => {
+                    const isVideo = item.type === 'video';
+                    
+                    mediaHtml += `
+                        <div class="mb-8 last:mb-0">
+                            <div class="bg-black flex justify-center max-h-[600px] overflow-hidden">
+                                ${isVideo 
+                                    ? `<video controls class="max-w-full max-h-[600px] object-contain" poster="${item.thumbnail_url || ''}">
+                                           <source src="${item.url}" type="video/mp4">
+                                           Your browser does not support the video tag.
+                                       </video>`
+                                    : `<img src="${item.url}" alt="Instagram Media" class="max-w-full max-h-[600px] object-contain">`
+                                }
+                            </div>
+                            <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-center">
+                                <a href="${item.url}" target="_blank" class="gradient-bg text-white font-bold py-3 px-8 rounded-xl transition transform hover:-translate-y-1 shadow-md inline-flex items-center gap-2">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Download ${isVideo ? 'Video' : 'Image'}</span>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                mediaHtml = '<div class="p-8 text-center text-gray-500 font-medium">No media found for this post.</div>';
+            }
+
+            const authorHtml = data.author ? `
+                <div class="p-6 border-b border-gray-100 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4">
+                    <div class="flex items-center gap-4">
+                        <img src="${data.author.avatar_url}" alt="${data.author.username}" class="w-14 h-14 rounded-full border-2 border-pink-100 object-cover">
+                        <div>
+                            <div class="flex items-center gap-1">
+                                <p class="font-bold text-gray-800 text-lg">${data.author.name || data.author.username}</p>
+                                ${data.author.verified ? '<i class="fa-solid fa-circle-check text-blue-500"></i>' : ''}
+                            </div>
+                            <a href="${data.author.profile_url}" target="_blank" class="text-sm text-gray-500 hover:text-pink-600 transition">@${data.author.username}</a>
+                        </div>
+                    </div>
+                    ${data.stats ? `
+                    <div class="flex gap-4 text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg">
+                        <div class="flex items-center gap-1.5" title="Likes">
+                            <i class="fa-solid fa-heart text-red-500"></i>
+                            <span class="font-medium">${data.stats.likes || 0}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5" title="Comments">
+                            <i class="fa-solid fa-comment text-blue-500"></i>
+                            <span class="font-medium">${data.stats.comments || 0}</span>
+                        </div>
+                    </div>` : ''}
+                </div>
+            ` : '';
+
+            // Formatting caption to preserve line breaks
+            const formattedCaption = data.caption ? data.caption.replace(/\n/g, '<br>') : '';
+            const captionText = formattedCaption ? `
+                <div class="p-6 border-b border-gray-100">
+                    <p class="text-gray-700 text-sm leading-relaxed">${formattedCaption}</p>
+                </div>
+            ` : '';
+
+            resultContainer.innerHTML = `
+                ${authorHtml}
+                ${captionText}
+                <div>
+                    ${mediaHtml}
+                </div>
+            `;
+            
+            resultContainer.classList.remove('hidden');
+            
+            // Scroll to results
+            setTimeout(() => {
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
